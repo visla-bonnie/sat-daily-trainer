@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SAT Daily Trainer</title>
+  <title>SAT & ERB Daily Trainer</title>
   <style>
     :root{
       --bg:#f7f8fc;
@@ -26,7 +26,7 @@
       color:var(--text);
     }
     .wrap{
-      max-width:980px;
+      max-width:1100px;
       margin:0 auto;
       padding:24px 16px 48px;
     }
@@ -47,10 +47,11 @@
       margin:0;
       opacity:.95;
       font-size:16px;
+      line-height:1.5;
     }
     .grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.25fr .75fr;
       gap:18px;
     }
     @media (max-width: 860px){
@@ -145,7 +146,7 @@
     }
     .q-text{
       font-size:17px;
-      line-height:1.5;
+      line-height:1.55;
       margin-bottom:12px;
       font-weight:700;
     }
@@ -218,6 +219,12 @@
       gap:10px;
       margin-top:12px;
     }
+    .small-note{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
+    }
     @media (max-width: 640px){
       .top-buttons{grid-template-columns:1fr}
       .stats{grid-template-columns:1fr}
@@ -227,8 +234,8 @@
 <body>
   <div class="wrap">
     <div class="hero">
-      <h1>SAT Daily Trainer</h1>
-      <p>GitHub-ready daily practice app for a 6th grade student building toward SAT success. Open the page each day, generate a fresh set, answer, and track progress.</p>
+      <h1>ERB to SAT Daily Trainer</h1>
+      <p>Choose a grade level from 6th through 11th or SAT mode. Generate a daily set, answer the questions, review explanations, and track progress over time.</p>
     </div>
 
     <div class="grid">
@@ -239,7 +246,12 @@
           <div>
             <label for="mode">Training Mode</label>
             <select id="mode">
-              <option value="bridge">6th Grade Bridge Mode</option>
+              <option value="grade6">6th Grade ERB Prep</option>
+              <option value="grade7">7th Grade ERB Prep</option>
+              <option value="grade8">8th Grade ERB Prep</option>
+              <option value="grade9">9th Grade Independent School Prep</option>
+              <option value="grade10">10th Grade Independent School Prep</option>
+              <option value="grade11">11th Grade College Prep</option>
               <option value="sat">SAT Mode</option>
             </select>
           </div>
@@ -264,6 +276,10 @@
           <button type="button" id="generateBtn">Generate Today's Set</button>
           <button type="button" class="secondary" id="submitBtn">Submit Answers</button>
           <button type="button" class="ghost" id="resetBtn">Reset Today</button>
+        </div>
+
+        <div class="small-note">
+          Tip: 6th–8th is best for ERB-style building. 9th–11th gets closer to rigorous private-school and college-prep difficulty. SAT mode is the challenge level.
         </div>
 
         <div id="quizArea" class="quiz-area"></div>
@@ -301,7 +317,7 @@
         </div>
 
         <div class="footer-note">
-          <strong>GitHub tip:</strong> upload this file as <code>index.html</code> to a GitHub repository, then enable Pages. The site will work as a simple webpage without any extra setup.
+          Upload this file as <code>index.html</code> to GitHub and enable Pages. After changing the code, refresh with <code>Ctrl + F5</code>.
         </div>
       </div>
     </div>
@@ -309,54 +325,54 @@
 
   <script>
     const questionBank = {
-      bridge: {
+      grade6: {
         reading: [
           {
             type: "Reading",
             subtype: "Main Idea",
-            question: "Passage: Mia planted beans in three cups. One cup got lots of sunlight, one got a little, and one stayed in a dark closet. After a week, the plant in the sunlight was tallest. What is the main idea?",
+            question: "Passage: During the winter, the community garden looked empty at first glance. However, volunteers were quietly preparing the soil, repairing wooden beds, and planning which vegetables would grow best in early spring. What is the main idea?",
             choices: [
-              "Beans can only grow in closets.",
-              "Sunlight helps plants grow better.",
-              "Mia likes cups more than gardens.",
-              "All plants grow the same way."
+              "The garden is closed forever in winter.",
+              "The garden still requires important work in winter.",
+              "Wooden beds are difficult to repair.",
+              "Spring vegetables are always easy to grow."
             ],
             answer: 1,
-            explanation: "The passage compares different light conditions and shows the tallest plant grew in sunlight."
+            explanation: "The passage shows that although the garden looks quiet, volunteers are still doing important work."
           },
           {
             type: "Reading",
             subtype: "Vocabulary in Context",
-            question: "Passage: The puppy was timid when it entered the noisy room, so it stayed close to its owner. In this sentence, timid most nearly means:",
-            choices: ["brave","shy","hungry","playful"],
+            question: "In the sentence 'Nina gave a brief explanation before the class began the experiment,' brief most nearly means:",
+            choices: ["careful", "short", "confusing", "excited"],
             answer: 1,
-            explanation: "Because the puppy stayed close and felt unsure in a noisy room, timid means shy."
+            explanation: "Brief means short in length or duration."
           },
           {
             type: "Reading",
             subtype: "Inference",
-            question: "Passage: Leo finished his homework before dinner and packed his backpack right away. Then he put his soccer cleats by the door. What can you infer?",
+            question: "Passage: Owen checked the weather twice, packed an extra jacket, and placed a flashlight in his bag before leaving camp. What can you infer?",
             choices: [
-              "Leo forgot about school.",
-              "Leo probably has soccer after school tomorrow.",
-              "Leo is cleaning the whole house.",
-              "Leo does not like sports."
+              "Owen expected warm sunshine all day.",
+              "Owen was preparing for uncertain conditions.",
+              "Owen had never gone outside before.",
+              "Owen planned to stay indoors."
             ],
             answer: 1,
-            explanation: "Putting cleats by the door suggests he expects to need them soon."
+            explanation: "The extra gear suggests he expected changing or difficult weather."
           },
           {
             type: "Reading",
             subtype: "Author's Purpose",
-            question: "Passage: A poster explains how recycling paper saves trees and reduces waste. The author's purpose is to:",
+            question: "Passage: A short article explains how practicing an instrument each day builds confidence, memory, and discipline. The author's purpose is to:",
             choices: [
-              "entertain readers with a story",
-              "persuade or inform people about recycling",
-              "describe a football game",
-              "teach people how to bake bread"
+              "entertain readers with a mystery story",
+              "explain and encourage a useful habit",
+              "prove that sports are better than music",
+              "describe how to build a violin"
             ],
             answer: 1,
-            explanation: "The poster shares benefits of recycling to inform and encourage action."
+            explanation: "The passage explains benefits and encourages regular practice."
           }
         ],
         writing: [
@@ -365,98 +381,766 @@
             subtype: "Grammar",
             question: "Choose the correct sentence.",
             choices: [
-              "She go to school every day.",
-              "She goes to school every day.",
-              "She going to school every day.",
-              "She gone to school every day."
+              "Each of the players have a water bottle.",
+              "Each of the players has a water bottle.",
+              "Each of the players having a water bottle.",
+              "Each of the players were carrying water bottle."
             ],
             answer: 1,
-            explanation: "For third-person singular in the present tense, use goes."
+            explanation: "Each is singular, so it takes has."
+          },
+          {
+            type: "Writing",
+            subtype: "Punctuation",
+            question: "Which sentence is punctuated correctly?",
+            choices: [
+              "After the meeting, we reviewed the notes.",
+              "After the meeting we, reviewed the notes.",
+              "After, the meeting we reviewed the notes.",
+              "After the meeting we reviewed, the notes."
+            ],
+            answer: 0,
+            explanation: "An introductory phrase is followed by a comma."
+          },
+          {
+            type: "Writing",
+            subtype: "Clarity",
+            question: "Choose the clearest sentence.",
+            choices: [
+              "The teacher explained the homework clearly to the class.",
+              "Clearly the homework the class explained by the teacher.",
+              "The class homework clearly explained the teacher.",
+              "The teacher, clearly, homework, to the class."
+            ],
+            answer: 0,
+            explanation: "This sentence is complete, grammatical, and clear."
+          },
+          {
+            type: "Writing",
+            subtype: "Word Choice",
+            question: "Choose the best word: The directions were so ____ that everyone completed the project correctly.",
+            choices: ["clear", "hidden", "angry", "silent"],
+            answer: 0,
+            explanation: "If everyone completed the project correctly, the directions were clear."
+          }
+        ],
+        math: [
+          {
+            type: "Math",
+            subtype: "Ratios",
+            question: "A recipe uses 4 cups of flour and 2 cups of sugar. What is the ratio of flour to sugar in simplest form?",
+            choices: ["4:2", "2:1", "1:2", "3:1"],
+            answer: 1,
+            explanation: "4:2 simplifies to 2:1."
+          },
+          {
+            type: "Math",
+            subtype: "Percent",
+            question: "What is 30 percent of 90?",
+            choices: ["18", "27", "30", "36"],
+            answer: 1,
+            explanation: "0.30 × 90 = 27."
+          },
+          {
+            type: "Math",
+            subtype: "Expressions",
+            question: "If x = 5, what is the value of 4x - 3?",
+            choices: ["17", "20", "23", "25"],
+            answer: 0,
+            explanation: "4(5) - 3 = 20 - 3 = 17."
+          },
+          {
+            type: "Math",
+            subtype: "Geometry",
+            question: "A rectangle has length 9 and width 4. What is its area?",
+            choices: ["13", "26", "36", "45"],
+            answer: 2,
+            explanation: "Area = length × width = 9 × 4 = 36."
+          }
+        ]
+      },
+
+      grade7: {
+        reading: [
+          {
+            type: "Reading",
+            subtype: "Main Idea",
+            question: "Passage: Although the museum's newest exhibit focused on ancient maps, many visitors were most interested in what those maps revealed about trade, migration, and human curiosity. Which choice best states the main idea?",
+            choices: [
+              "Ancient maps were mainly decorative objects.",
+              "Visitors only care about famous explorers.",
+              "The exhibit showed how maps reveal larger human stories.",
+              "Museums should replace maps with digital screens."
+            ],
+            answer: 2,
+            explanation: "The passage emphasizes that the maps reveal broader stories about people and movement."
+          },
+          {
+            type: "Reading",
+            subtype: "Inference",
+            question: "Passage: Sofia rewrote her opening paragraph three times, deleted two weaker examples, and asked a classmate to read her final draft aloud. What can be inferred?",
+            choices: [
+              "Sofia was uninterested in the assignment.",
+              "Sofia wanted her writing to be strong and polished.",
+              "Sofia could not think of any topic.",
+              "Sofia planned to submit no final draft."
+            ],
+            answer: 1,
+            explanation: "Her revisions and feedback-seeking show care and polish."
+          },
+          {
+            type: "Reading",
+            subtype: "Vocabulary in Context",
+            question: "In the sentence 'The principal's remarks were measured and thoughtful,' measured most nearly means:",
+            choices: ["tiny", "careful", "loud", "mathematical"],
+            answer: 1,
+            explanation: "Measured here means careful and controlled."
+          },
+          {
+            type: "Reading",
+            subtype: "Author's Purpose",
+            question: "Passage: A magazine article compares handwritten notes with typed notes and discusses when each is most useful. The author's purpose is to:",
+            choices: [
+              "argue that handwriting should disappear",
+              "compare two methods thoughtfully",
+              "tell a fictional story about school",
+              "criticize all technology"
+            ],
+            answer: 1,
+            explanation: "The article compares the strengths of both methods."
+          }
+        ],
+        writing: [
+          {
+            type: "Writing",
+            subtype: "Sentence Combining",
+            question: "Choose the best revision: 'The storm ended. The runners returned to the field.'",
+            choices: [
+              "The storm ended, and the runners returned to the field.",
+              "The storm ended the runners returned to the field.",
+              "The storm ended, but, the runners returned to the field.",
+              "The storm ended because the runners returned to the field."
+            ],
+            answer: 0,
+            explanation: "This version correctly joins two complete thoughts."
+          },
+          {
+            type: "Writing",
+            subtype: "Word Choice",
+            question: "Choose the best word: The speaker's argument was so ____ that even skeptical listeners reconsidered their views.",
+            choices: ["ordinary", "persuasive", "silent", "careless"],
+            answer: 1,
+            explanation: "If skeptical listeners reconsidered, the argument was persuasive."
+          },
+          {
+            type: "Writing",
+            subtype: "Grammar",
+            question: "Choose the correct sentence.",
+            choices: [
+              "Neither of the boys were late.",
+              "Neither of the boys was late.",
+              "Neither of the boys are late.",
+              "Neither of the boys be late."
+            ],
+            answer: 1,
+            explanation: "Neither is singular, so was is correct."
           },
           {
             type: "Writing",
             subtype: "Punctuation",
             question: "Which sentence uses punctuation correctly?",
             choices: [
-              "After lunch we went outside.",
-              "After lunch, we went outside.",
-              "After, lunch we went outside.",
-              "After lunch we, went outside."
-            ],
-            answer: 1,
-            explanation: "An introductory phrase should be followed by a comma."
-          },
-          {
-            type: "Writing",
-            subtype: "Word Choice",
-            question: "Pick the best word: The test was difficult, but Maya remained ____ and finished every question.",
-            choices: ["calm","crumb","storm","stone"],
-            answer: 0,
-            explanation: "Calm best fits the meaning of staying steady during a hard test."
-          },
-          {
-            type: "Writing",
-            subtype: "Sentence Order",
-            question: "Which sentence is the clearest?",
-            choices: [
-              "Because the rain stopped, we played outside.",
-              "We played because outside the rain stopped.",
-              "Stopped the rain, outside we played because.",
-              "Outside because rain stopped we played."
+              "Before the concert started, we found our seats.",
+              "Before the concert started we, found our seats.",
+              "Before, the concert started we found our seats.",
+              "Before the concert, started we found our seats."
             ],
             answer: 0,
-            explanation: "It is grammatically correct and expresses the idea most clearly."
+            explanation: "An introductory clause should be followed by a comma."
           }
         ],
         math: [
           {
             type: "Math",
-            subtype: "Arithmetic",
-            question: "What is 48 + 27?",
-            choices: ["65","75","85","95"],
-            answer: 1,
-            explanation: "48 + 27 = 75."
+            subtype: "Percent Change",
+            question: "A jacket originally costs 80 dollars and is discounted by 25 percent. What is the sale price?",
+            choices: ["20", "40", "55", "60"],
+            answer: 3,
+            explanation: "25 percent of 80 is 20, and 80 - 20 = 60."
           },
           {
             type: "Math",
-            subtype: "Fractions",
-            question: "Which fraction is equal to 1/2?",
-            choices: ["2/3","3/6","4/10","5/12"],
-            answer: 1,
-            explanation: "3/6 simplifies to 1/2."
-          },
-          {
-            type: "Math",
-            subtype: "Percent",
-            question: "What is 25% of 80?",
-            choices: ["10","15","20","25"],
+            subtype: "Expressions",
+            question: "If 3x + 4 = 19, what is x?",
+            choices: ["3", "4", "5", "6"],
             answer: 2,
-            explanation: "25% means one-fourth, and one-fourth of 80 is 20."
+            explanation: "3x = 15, so x = 5."
           },
           {
             type: "Math",
-            subtype: "Algebra",
-            question: "If 3x = 21, what is x?",
-            choices: ["6","7","8","9"],
-            answer: 1,
-            explanation: "Divide both sides by 3 to get x = 7."
+            subtype: "Probability",
+            question: "A bag has 4 blue marbles, 3 red marbles, and 3 green marbles. What is the probability of drawing a red marble?",
+            choices: ["3/10", "1/3", "4/10", "7/10"],
+            answer: 0,
+            explanation: "There are 10 total marbles, and 3 are red."
           },
           {
             type: "Math",
             subtype: "Geometry",
-            question: "A rectangle has length 8 and width 3. What is its area?",
-            choices: ["11","16","24","48"],
-            answer: 2,
-            explanation: "Area = length × width = 8 × 3 = 24."
+            question: "A triangle has a base of 12 units and a height of 7 units. What is its area?",
+            choices: ["19", "42", "84", "168"],
+            answer: 1,
+            explanation: "Area = 1/2 × 12 × 7 = 42."
           }
         ]
       },
+
+      grade8: {
+        reading: [
+          {
+            type: "Reading",
+            subtype: "Inference",
+            question: "Passage: The article praises the invention not because it was flawless, but because it opened the door to later breakthroughs that changed everyday life. Which inference is best supported?",
+            choices: [
+              "The invention succeeded immediately in every way.",
+              "The invention was important partly because of its long-term influence.",
+              "The article argues that new inventions are usually unnecessary.",
+              "The invention was never improved."
+            ],
+            answer: 1,
+            explanation: "The passage says its significance lies in enabling later breakthroughs."
+          },
+          {
+            type: "Reading",
+            subtype: "Author's Purpose",
+            question: "Passage: A writer compares handwritten letters and instant messages, explaining what each form of communication offers. The author's purpose is to:",
+            choices: [
+              "declare one form completely useless",
+              "compare two forms of communication thoughtfully",
+              "describe how to send a package",
+              "argue that technology should be banned"
+            ],
+            answer: 1,
+            explanation: "The passage compares strengths of both forms."
+          },
+          {
+            type: "Reading",
+            subtype: "Vocabulary in Context",
+            question: "In the sentence 'Her response was deliberate rather than rushed,' deliberate most nearly means:",
+            choices: ["careful", "angry", "instant", "uncertain"],
+            answer: 0,
+            explanation: "Deliberate means careful and intentional."
+          },
+          {
+            type: "Reading",
+            subtype: "Central Idea",
+            question: "Passage: The coach reminded the team that discipline often looks ordinary: arriving on time, practicing basic skills, and paying attention to detail. Which choice best states the central idea?",
+            choices: [
+              "Great success depends only on talent.",
+              "Discipline is built through small, steady habits.",
+              "Practice should always be exciting.",
+              "Teams improve only during games."
+            ],
+            answer: 1,
+            explanation: "The passage defines discipline as small, consistent actions."
+          }
+        ],
+        writing: [
+          {
+            type: "Writing",
+            subtype: "Transitions",
+            question: "The first design was affordable. _____, it lacked the durability needed for everyday use.",
+            choices: ["Similarly", "However", "For example", "Therefore"],
+            answer: 1,
+            explanation: "However correctly signals contrast."
+          },
+          {
+            type: "Writing",
+            subtype: "Concision",
+            question: "Which sentence is most concise?",
+            choices: [
+              "The reason is because the path was muddy.",
+              "The reason why is because the path was muddy.",
+              "The path was muddy.",
+              "It was due to the fact that the path was muddy."
+            ],
+            answer: 2,
+            explanation: "The path was muddy is the clearest, most concise version."
+          },
+          {
+            type: "Writing",
+            subtype: "Punctuation",
+            question: "Choose the sentence with correct punctuation.",
+            choices: [
+              "My brother enjoys painting; he visits the studio every Saturday.",
+              "My brother enjoys painting, he visits the studio every Saturday.",
+              "My brother enjoys painting he visits the studio every Saturday.",
+              "My brother enjoys painting: and he visits the studio every Saturday."
+            ],
+            answer: 0,
+            explanation: "A semicolon correctly joins two related independent clauses."
+          },
+          {
+            type: "Writing",
+            subtype: "Grammar",
+            question: "Choose the correct sentence.",
+            choices: [
+              "The list of books were placed on the desk.",
+              "The list of books was placed on the desk.",
+              "The list of books be placed on the desk.",
+              "The list of books are placed on the desk."
+            ],
+            answer: 1,
+            explanation: "The subject is list, which is singular, so was is correct."
+          }
+        ],
+        math: [
+          {
+            type: "Math",
+            subtype: "Linear Equations",
+            question: "If 5x - 7 = 18, what is x?",
+            choices: ["3", "4", "5", "6"],
+            answer: 2,
+            explanation: "5x = 25, so x = 5."
+          },
+          {
+            type: "Math",
+            subtype: "Functions",
+            question: "If f(x) = 2x + 3, what is f(4)?",
+            choices: ["7", "8", "10", "11"],
+            answer: 3,
+            explanation: "2(4) + 3 = 11."
+          },
+          {
+            type: "Math",
+            subtype: "Geometry",
+            question: "A triangle has base 12 and height 5. What is its area?",
+            choices: ["17", "30", "60", "120"],
+            answer: 1,
+            explanation: "Area = 1/2 × 12 × 5 = 30."
+          },
+          {
+            type: "Math",
+            subtype: "Statistics",
+            question: "The mean of 4, 8, 10, and x is 9. What is x?",
+            choices: ["12", "14", "15", "16"],
+            answer: 1,
+            explanation: "The total must be 36. Since 4 + 8 + 10 = 22, x = 14."
+          }
+        ]
+      },
+
+      grade9: {
+        reading: [
+          {
+            type: "Reading",
+            subtype: "Central Claim",
+            question: "Passage: The essay argues that public parks matter not merely because they are attractive, but because they create shared civic spaces where strangers develop a sense of common belonging. Which choice best states the author's central claim?",
+            choices: [
+              "Parks are expensive and difficult to maintain.",
+              "Parks are most valuable as social and civic spaces.",
+              "Only large cities need public parks.",
+              "Beautiful landscapes are less important than roads."
+            ],
+            answer: 1,
+            explanation: "The passage emphasizes civic and social value."
+          },
+          {
+            type: "Reading",
+            subtype: "Inference",
+            question: "Passage: Although the scientist rejected several early hypotheses, her notebook reveals growing excitement with each failed attempt. Which inference is best supported?",
+            choices: [
+              "She considered failure useless.",
+              "She saw unsuccessful trials as part of discovery.",
+              "She stopped the project early.",
+              "She hid her results from colleagues."
+            ],
+            answer: 1,
+            explanation: "Her growing excitement suggests failures were informative, not discouraging."
+          },
+          {
+            type: "Reading",
+            subtype: "Vocabulary in Context",
+            question: "In the sentence 'The mayor delivered a candid assessment of the city's challenges,' candid most nearly means:",
+            choices: ["brief", "honest", "optimistic", "technical"],
+            answer: 1,
+            explanation: "Candid means honest and direct."
+          },
+          {
+            type: "Reading",
+            subtype: "Reasoning",
+            question: "Passage: The reviewer admires the book's ambition but argues that its strongest passages are its quietest, most restrained ones. Which choice best reflects the reviewer's view?",
+            choices: [
+              "The reviewer values energy over control.",
+              "The reviewer prefers restraint to spectacle in this book.",
+              "The reviewer dislikes the book entirely.",
+              "The quietest passages are also the shortest."
+            ],
+            answer: 1,
+            explanation: "The praise for restrained passages shows the reviewer values control and subtlety."
+          }
+        ],
+        writing: [
+          {
+            type: "Writing",
+            subtype: "Modifier Placement",
+            question: "Choose the clearest sentence.",
+            choices: [
+              "Running down the hill, the backpack bounced against Maya's shoulder.",
+              "Running down the hill, Maya felt her backpack bounce against her shoulder.",
+              "The backpack, running down the hill, bounced against Maya's shoulder.",
+              "Maya's shoulder bounced against the backpack running down the hill."
+            ],
+            answer: 1,
+            explanation: "The modifier correctly refers to Maya."
+          },
+          {
+            type: "Writing",
+            subtype: "Transitions",
+            question: "The data from the first survey appeared promising. _____, the researchers repeated the study before drawing conclusions.",
+            choices: ["Nevertheless", "For instance", "Similarly", "Instead of"],
+            answer: 0,
+            explanation: "Nevertheless shows contrast between promising data and caution."
+          },
+          {
+            type: "Writing",
+            subtype: "Parallel Structure",
+            question: "Which sentence uses parallel structure correctly?",
+            choices: [
+              "The internship taught her to analyze data, writing reports, and how to present findings.",
+              "The internship taught her to analyze data, write reports, and present findings.",
+              "The internship taught her analyzing data, to write reports, and presentation skills.",
+              "The internship taught her data analysis, writing reports, and to present."
+            ],
+            answer: 1,
+            explanation: "All three verbs match in form."
+          },
+          {
+            type: "Writing",
+            subtype: "Sentence Boundaries",
+            question: "Choose the correct version.",
+            choices: [
+              "The lecture was long, however the audience remained engaged.",
+              "The lecture was long; however, the audience remained engaged.",
+              "The lecture was long however, the audience remained engaged.",
+              "The lecture was long however the audience, remained engaged."
+            ],
+            answer: 1,
+            explanation: "A semicolon before however and a comma after it are correct here."
+          }
+        ],
+        math: [
+          {
+            type: "Math",
+            subtype: "Systems",
+            question: "What is the solution to the system? x + y = 10 and x - y = 2",
+            choices: ["(6,4)", "(4,6)", "(8,2)", "(5,5)"],
+            answer: 0,
+            explanation: "Adding the equations gives 2x = 12, so x = 6 and y = 4."
+          },
+          {
+            type: "Math",
+            subtype: "Quadratics",
+            question: "Which expression is equivalent to (x + 4)(x - 4)?",
+            choices: ["x² + 16", "x² - 16", "x² - 8x + 16", "x² + 8x - 16"],
+            answer: 1,
+            explanation: "This is a difference of squares."
+          },
+          {
+            type: "Math",
+            subtype: "Data Analysis",
+            question: "A backpack that costs 72 dollars is marked down by 15 percent. What is the sale price?",
+            choices: ["57.20", "60.80", "61.20", "63.20"],
+            answer: 2,
+            explanation: "15 percent of 72 is 10.8, and 72 - 10.8 = 61.2."
+          },
+          {
+            type: "Math",
+            subtype: "Functions",
+            question: "If f(x) = 3x - 2, what is f(5)?",
+            choices: ["11", "12", "13", "15"],
+            answer: 2,
+            explanation: "3(5) - 2 = 13."
+          }
+        ]
+      },
+
+      grade10: {
+        reading: [
+          {
+            type: "Reading",
+            subtype: "Reasoning",
+            question: "Passage: The editorial warns against treating efficiency as the only measure of success, arguing that institutions also require trust, legitimacy, and long-term resilience. Which choice best captures the author's reasoning?",
+            choices: [
+              "Efficiency should always outweigh other concerns.",
+              "Institutions fail when they ignore public trust and long-term strength.",
+              "Legitimacy can be measured exactly like speed.",
+              "Resilience is unimportant in public systems."
+            ],
+            answer: 1,
+            explanation: "The author argues that success needs more than efficiency."
+          },
+          {
+            type: "Reading",
+            subtype: "Inference",
+            question: "Passage: The reviewer admires the novel's ambition yet repeatedly notes that its strongest scenes are its quietest ones. What is the best inference?",
+            choices: [
+              "The reviewer thinks the novel is entirely unsuccessful.",
+              "The reviewer values restraint more than spectacle in this novel.",
+              "The reviewer dislikes all ambitious writing.",
+              "The quiet scenes are the shortest ones."
+            ],
+            answer: 1,
+            explanation: "The praise for quiet scenes suggests restraint is more effective here."
+          },
+          {
+            type: "Reading",
+            subtype: "Vocabulary in Context",
+            question: "In the sentence 'The policy was revised to address an apparent inequity,' inequity most nearly means:",
+            choices: ["imbalance or unfairness", "delay", "tradition", "measurement"],
+            answer: 0,
+            explanation: "Inequity means unfairness."
+          },
+          {
+            type: "Reading",
+            subtype: "Central Idea",
+            question: "Passage: The historian argues that reform movements often gain strength by borrowing the language of older traditions while presenting themselves as new. What is the central idea?",
+            choices: [
+              "All reform movements reject history.",
+              "Reform often combines innovation with older traditions.",
+              "Old traditions prevent change.",
+              "Only new language can create progress."
+            ],
+            answer: 1,
+            explanation: "The passage highlights how reform movements draw power from both continuity and change."
+          }
+        ],
+        writing: [
+          {
+            type: "Writing",
+            subtype: "Logical Flow",
+            question: "Which sentence best follows this opener? 'The town hoped tourism would strengthen the local economy.'",
+            choices: [
+              "In 1874, a bridge was painted red.",
+              "As visitor numbers increased, restaurants and small shops extended their hours.",
+              "Many people enjoy taking vacations in summer.",
+              "Tourists have cameras, maps, and luggage."
+            ],
+            answer: 1,
+            explanation: "It directly develops the idea of economic strengthening."
+          },
+          {
+            type: "Writing",
+            subtype: "Precision",
+            question: "Choose the most precise word: The scientist's claim was supported by ____ evidence gathered over several years.",
+            choices: ["nice", "solid", "interesting", "friendly"],
+            answer: 1,
+            explanation: "Solid is the most precise and appropriate word."
+          },
+          {
+            type: "Writing",
+            subtype: "Sentence Boundaries",
+            question: "Choose the correct version.",
+            choices: [
+              "The results were promising, therefore the team expanded the project.",
+              "The results were promising; therefore, the team expanded the project.",
+              "The results were promising therefore, the team expanded the project.",
+              "The results were promising therefore the team, expanded the project."
+            ],
+            answer: 1,
+            explanation: "A semicolon before therefore and a comma after it are correct here."
+          },
+          {
+            type: "Writing",
+            subtype: "Parallel Structure",
+            question: "Choose the sentence with correct parallel structure.",
+            choices: [
+              "The job requires planning events, managing budgets, and to communicate with clients.",
+              "The job requires planning events, managing budgets, and communicating with clients.",
+              "The job requires to plan events, managing budgets, and communication with clients.",
+              "The job requires planning events, budgets to manage, and communicating with clients."
+            ],
+            answer: 1,
+            explanation: "All three elements are parallel gerund phrases."
+          }
+        ],
+        math: [
+          {
+            type: "Math",
+            subtype: "Exponents",
+            question: "What is the value of 2³ × 2²?",
+            choices: ["16", "32", "64", "128"],
+            answer: 1,
+            explanation: "Add exponents: 2^(3+2) = 2^5 = 32."
+          },
+          {
+            type: "Math",
+            subtype: "Quadratic Functions",
+            question: "If y = x² - 6x + 8, what is y when x = 2?",
+            choices: ["0", "2", "4", "8"],
+            answer: 0,
+            explanation: "2² - 6(2) + 8 = 4 - 12 + 8 = 0."
+          },
+          {
+            type: "Math",
+            subtype: "Geometry",
+            question: "A circle has diameter 10. What is its circumference?",
+            choices: ["5π", "10π", "20π", "25π"],
+            answer: 1,
+            explanation: "Circumference = πd = 10π."
+          },
+          {
+            type: "Math",
+            subtype: "Functions",
+            question: "If g(x) = x² + 1, what is g(3)?",
+            choices: ["7", "8", "9", "10"],
+            answer: 3,
+            explanation: "3² + 1 = 10."
+          }
+        ]
+      },
+
+      grade11: {
+        reading: [
+          {
+            type: "Reading",
+            subtype: "Argument",
+            question: "Passage: The author contends that technological progress is not neutral because design choices inevitably reflect assumptions about whose needs matter most. Which statement best reflects the argument?",
+            choices: [
+              "Technology advances without human influence.",
+              "Design choices embed values and priorities.",
+              "Neutral tools are always fair tools.",
+              "Innovation should stop until perfect fairness is possible."
+            ],
+            answer: 1,
+            explanation: "The passage argues that technology reflects human priorities."
+          },
+          {
+            type: "Reading",
+            subtype: "Inference",
+            question: "Passage: The historian notes that reformers borrowed language from earlier movements even while insisting their cause was entirely new. What is the best inference?",
+            choices: [
+              "The movement had no original ideas.",
+              "The reformers were connected to older traditions more than they admitted.",
+              "The historian rejects all reform efforts.",
+              "Earlier movements used completely different language."
+            ],
+            answer: 1,
+            explanation: "Borrowing older language suggests continuity with prior traditions."
+          },
+          {
+            type: "Reading",
+            subtype: "Vocabulary in Context",
+            question: "In the sentence 'The proposal rests on a dubious assumption,' dubious most nearly means:",
+            choices: ["effective", "questionable", "popular", "mathematical"],
+            answer: 1,
+            explanation: "Dubious means doubtful or questionable."
+          },
+          {
+            type: "Reading",
+            subtype: "Reasoning",
+            question: "Passage: The critic praises the essay not for offering easy answers, but for forcing readers to see how ordinary habits can support unjust systems. What is the critic mainly praising?",
+            choices: [
+              "The essay's humor",
+              "The essay's simplicity",
+              "The essay's ability to challenge comfortable assumptions",
+              "The essay's use of short sentences"
+            ],
+            answer: 2,
+            explanation: "The critic values how the essay unsettles readers and challenges привычные assumptions."
+          }
+        ],
+        writing: [
+          {
+            type: "Writing",
+            subtype: "Concision and Style",
+            question: "Which version is most effective?",
+            choices: [
+              "The committee reached a decision at this point in time.",
+              "The committee reached a decision then.",
+              "The committee, at this point in time, reached a decision.",
+              "At this point in time, the committee was reaching a decision."
+            ],
+            answer: 1,
+            explanation: "Then is concise and clear."
+          },
+          {
+            type: "Writing",
+            subtype: "Transitions",
+            question: "The initial model appeared highly accurate in the laboratory. _____, it performed less reliably in real-world settings.",
+            choices: ["Accordingly", "Nevertheless", "For example", "Similarly"],
+            answer: 1,
+            explanation: "Nevertheless signals contrast."
+          },
+          {
+            type: "Writing",
+            subtype: "Agreement",
+            question: "Choose the correct sentence.",
+            choices: [
+              "The impact of these policies are difficult to predict.",
+              "The impact of these policies is difficult to predict.",
+              "The impact of these policies be difficult to predict.",
+              "The impact of these policies have been difficult predict."
+            ],
+            answer: 1,
+            explanation: "The subject impact is singular."
+          },
+          {
+            type: "Writing",
+            subtype: "Precision",
+            question: "Choose the most precise revision: 'The report says many things about the city's changes.'",
+            choices: [
+              "The report talks about stuff in the city.",
+              "The report outlines several major economic and demographic shifts in the city.",
+              "The report says things that changed.",
+              "The city had changes, according to the report."
+            ],
+            answer: 1,
+            explanation: "This choice is far more specific and precise."
+          }
+        ],
+        math: [
+          {
+            type: "Math",
+            subtype: "Functions",
+            question: "If f(x) = 3x - 2 and g(x) = x², what is f(4) + g(2)?",
+            choices: ["10", "12", "14", "16"],
+            answer: 2,
+            explanation: "f(4)=10 and g(2)=4, so total = 14."
+          },
+          {
+            type: "Math",
+            subtype: "Quadratics",
+            question: "What are the solutions to x² - 5x + 6 = 0?",
+            choices: ["1 and 6", "2 and 3", "3 and 5", "2 and 6"],
+            answer: 1,
+            explanation: "(x-2)(x-3)=0."
+          },
+          {
+            type: "Math",
+            subtype: "Statistics",
+            question: "The mean of 4 numbers is 12. If three of the numbers are 8, 11, and 15, what is the fourth number?",
+            choices: ["10", "12", "14", "16"],
+            answer: 2,
+            explanation: "Total must be 48. The known sum is 34, so the missing number is 14."
+          },
+          {
+            type: "Math",
+            subtype: "Algebra",
+            question: "If 3(2x - 1) = 21, what is x?",
+            choices: ["3", "4", "5", "6"],
+            answer: 1,
+            explanation: "6x - 3 = 21, so 6x = 24 and x = 4."
+          }
+        ]
+      },
+
       sat: {
         reading: [
           {
             type: "Reading",
             subtype: "Information and Ideas",
-            question: "Passage: Researchers tested whether short study breaks improve memory. Students who paused briefly between review sessions remembered more information one week later than students who studied continuously. Which choice best states the central claim?",
+            question: "Researchers tested whether short study breaks improve memory. Students who paused briefly between review sessions remembered more information one week later than students who studied continuously. Which choice best states the central claim?",
             choices: [
               "Longer study sessions always cause confusion.",
               "Brief breaks may improve long-term retention.",
@@ -469,15 +1153,15 @@
           {
             type: "Reading",
             subtype: "Craft and Structure",
-            question: "In the sentence 'The committee response was measured rather than impulsive,' measured most nearly means:",
-            choices: ["calculated and careful","tiny","hidden","mathematical"],
+            question: "In the sentence 'The committee's response was measured rather than impulsive,' measured most nearly means:",
+            choices: ["calculated and careful", "tiny", "hidden", "mathematical"],
             answer: 0,
             explanation: "Measured here describes a careful, controlled response."
           },
           {
             type: "Reading",
             subtype: "Inference",
-            question: "Passage: Although the original design was inexpensive to build, the city eventually replaced it with a more durable model after years of costly repairs. Which inference is best supported?",
+            question: "Although the original design was inexpensive to build, the city eventually replaced it with a more durable model after years of costly repairs. Which inference is best supported?",
             choices: [
               "The city prefers attractive designs to practical ones.",
               "The cheaper design turned out to be less economical over time.",
@@ -486,6 +1170,19 @@
             ],
             answer: 1,
             explanation: "The passage contrasts low initial cost with expensive repairs later."
+          },
+          {
+            type: "Reading",
+            subtype: "Central Idea",
+            question: "Passage: A science writer argues that the usefulness of a model lies not in capturing every detail of reality but in helping researchers ask better questions. What is the central idea?",
+            choices: [
+              "Scientific models are valuable mainly because they are simple tools for thinking.",
+              "Researchers should avoid models whenever possible.",
+              "A model is successful only when it includes every detail.",
+              "Reality cannot be studied through questions."
+            ],
+            answer: 0,
+            explanation: "The writer values models as tools that guide thinking and inquiry."
           }
         ],
         writing: [
@@ -493,17 +1190,17 @@
             type: "Writing",
             subtype: "Standard English Conventions",
             question: "Choose the option that completes the sentence correctly: The scientists, along with the lab assistant, ____ preparing the samples.",
-            choices: ["is","are","be","were"],
+            choices: ["is", "are", "be", "were"],
             answer: 1,
-            explanation: "The subject is scientists. The phrase 'along with the lab assistant' does not change the plural subject, so are is correct."
+            explanation: "The subject is scientists. The phrase along with the lab assistant does not change the plural subject."
           },
           {
             type: "Writing",
             subtype: "Expression of Ideas",
-            question: "Which transition best completes the sentence? The first prototype was lightweight and efficient; however, it was too fragile for everyday use. Which word signals the contrast?",
-            choices: ["for example","however","therefore","similarly"],
+            question: "Which transition best completes the sentence? The first prototype was lightweight and efficient; ____, it was too fragile for everyday use.",
+            choices: ["for example", "however", "therefore", "similarly"],
             answer: 1,
-            explanation: "However is the transition that shows contrast."
+            explanation: "The second clause contrasts with the first."
           },
           {
             type: "Writing",
@@ -537,7 +1234,7 @@
             type: "Math",
             subtype: "Algebra",
             question: "If 2x + 5 = 17, what is the value of x?",
-            choices: ["5","6","7","8"],
+            choices: ["5", "6", "7", "8"],
             answer: 1,
             explanation: "2x = 12, so x = 6."
           },
@@ -545,7 +1242,7 @@
             type: "Math",
             subtype: "Advanced Math",
             question: "Which expression is equivalent to (x + 3)(x - 3)?",
-            choices: ["x² + 9","x² - 6x + 9","x² - 9","x² + 6x - 9"],
+            choices: ["x² + 9", "x² - 6x + 9", "x² - 9", "x² + 6x - 9"],
             answer: 2,
             explanation: "This is a difference of squares: x² - 9."
           },
@@ -553,7 +1250,7 @@
             type: "Math",
             subtype: "Data Analysis",
             question: "A store discounts a 60 dollar backpack by 15 percent. What is the sale price?",
-            choices: ["45 dollars","49 dollars","51 dollars","54 dollars"],
+            choices: ["45 dollars", "49 dollars", "51 dollars", "54 dollars"],
             answer: 2,
             explanation: "15 percent of 60 is 9, and 60 minus 9 equals 51."
           },
@@ -561,7 +1258,7 @@
             type: "Math",
             subtype: "Geometry",
             question: "A circle has radius 4. What is its area?",
-            choices: ["8π","16π","32π","64π"],
+            choices: ["8π", "16π", "32π", "64π"],
             answer: 1,
             explanation: "Area of a circle is πr² = π(4²) = 16π."
           }
@@ -583,39 +1280,43 @@
 
     function pickQuestions(mode, count){
       const seed = getDaySeed();
-      const pools = []
+      const pool = []
         .concat(questionBank[mode].reading)
         .concat(questionBank[mode].writing)
         .concat(questionBank[mode].math);
 
       const selected = [];
       const used = {};
-
       let safety = 0;
-      while (selected.length < count && safety < 200) {
-        const idx = Math.floor(seededRandom(seed + selected.length * 17 + safety * 31) * pools.length);
+
+      while (selected.length < count && safety < 500) {
+        const idx = Math.floor(seededRandom(seed + selected.length * 17 + safety * 31) * pool.length);
         if (!used[idx]) {
-          selected.push(pools[idx]);
+          selected.push(pool[idx]);
           used[idx] = true;
         }
         safety++;
-        if (Object.keys(used).length >= pools.length) {
+        if (Object.keys(used).length >= pool.length) {
           break;
         }
       }
+
       return selected;
     }
 
     function renderQuiz(){
       const area = document.getElementById("quizArea");
+
       if (!currentQuiz.length) {
         area.innerHTML = "<p class='muted'>Click <strong>Generate Today's Set</strong> to begin.</p>";
         return;
       }
 
       let html = "";
+
       currentQuiz.forEach(function(q, i) {
         let choiceHtml = "";
+
         q.choices.forEach(function(choice, cIndex) {
           choiceHtml +=
             '<label class="choice">' +
@@ -650,6 +1351,7 @@
       }
 
       let correct = 0;
+
       currentQuiz.forEach(function(q, i) {
         const selected = document.querySelector('input[name="question_' + i + '"]:checked');
         const answerBox = document.getElementById("answer_" + i);
@@ -682,7 +1384,7 @@
 
     function getResults(){
       try {
-        return JSON.parse(localStorage.getItem("satTrainerResults") || "[]");
+        return JSON.parse(localStorage.getItem("trainerResults") || "[]");
       } catch (e) {
         return [];
       }
@@ -702,11 +1404,12 @@
         results.unshift(entry);
       }
 
-      localStorage.setItem("satTrainerResults", JSON.stringify(results.slice(0, 60)));
+      localStorage.setItem("trainerResults", JSON.stringify(results.slice(0, 100)));
     }
 
     function computeStreak(results){
       if (!results.length) return 0;
+
       const dates = results.map(function(r){ return r.date; }).sort().reverse();
       let streak = 0;
       const current = new Date();
@@ -724,6 +1427,16 @@
       return streak;
     }
 
+    function modeLabel(mode){
+      if (mode === "grade6") return "6th Grade ERB Prep";
+      if (mode === "grade7") return "7th Grade ERB Prep";
+      if (mode === "grade8") return "8th Grade ERB Prep";
+      if (mode === "grade9") return "9th Grade Independent School Prep";
+      if (mode === "grade10") return "10th Grade Independent School Prep";
+      if (mode === "grade11") return "11th Grade College Prep";
+      return "SAT Mode";
+    }
+
     function updateDashboard(){
       const results = getResults();
       const days = results.length;
@@ -739,17 +1452,17 @@
         history.innerHTML = "<div class='history-item muted'>No practice history yet.</div>";
       } else {
         history.innerHTML = results.slice(0,7).map(function(r){
-          return '<div class="history-item"><strong>' + r.date + '</strong> · ' + (r.mode === "bridge" ? "Bridge Mode" : "SAT Mode") + ' · <strong>' + r.score + '%</strong></div>';
+          return '<div class="history-item"><strong>' + r.date + '</strong> · ' + modeLabel(r.mode) + ' · <strong>' + r.score + '%</strong></div>';
         }).join("");
       }
 
-      const savedName = localStorage.getItem("satTrainerName") || "";
+      const savedName = localStorage.getItem("trainerName") || "";
       document.getElementById("studentName").value = savedName;
     }
 
     function saveName(){
       const name = document.getElementById("studentName").value.trim();
-      localStorage.setItem("satTrainerName", name);
+      localStorage.setItem("trainerName", name);
       alert(name ? "Saved name: " + name : "Name cleared.");
     }
 
