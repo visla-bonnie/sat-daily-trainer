@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAT Daily Trainer</title>
+  <style>
+    :root{
+      --bg:#f7f8fc;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --accent:#4f46e5;
+      --accent2:#0ea5e9;
+      --ok:#15803d;
+      --bad:#dc2626;
+      --border:#e5e7eb;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#eef2ff 0%, #f7f8fc 45%, #ffffff 100%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:24px 16px 48px;
+    }
+    .hero{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .hero h1{
+      margin:0 0 8px;
+      font-size:34px;
+      line-height:1.1;
+    }
+    .hero p{
+      margin:0;
+      opacity:.95;
+      font-size:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+      .hero h1{font-size:28px}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    h2{
+      margin:0 0 14px;
+      font-size:22px;
+    }
+    .controls{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+      margin-bottom:14px;
+    }
+    @media (max-width: 640px){
+      .controls{grid-template-columns:1fr}
+    }
+    label{
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      font-size:14px;
+    }
+    select, button, input[type="text"]{
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      font-size:15px;
+      background:white;
+    }
+    button{
+      background:var(--accent);
+      color:white;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      transition:.2s transform ease, .2s opacity ease;
+    }
+    button:hover{transform:translateY(-1px); opacity:.95}
+    .secondary{
+      background:#111827;
+    }
+    .ghost{
+      background:white;
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:8px;
+    }
+    .stat{
+      background:#f9fafb;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      text-align:center;
+    }
+    .stat .num{
+      font-size:24px;
+      font-weight:800;
+      margin-bottom:4px;
+    }
+    .muted{color:var(--muted)}
+    .quiz-area{margin-top:14px}
+    .question{
+      padding:16px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:#fcfcff;
+      margin-bottom:12px;
+    }
+    .q-meta{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    .q-text{
+      font-size:17px;
+      line-height:1.5;
+      margin-bottom:12px;
+      font-weight:700;
+    }
+    .choices{
+      display:grid;
+      gap:8px;
+    }
+    .choice{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 12px;
+      background:white;
+    }
+    .choice input{margin-top:3px}
+    .answer{
+      margin-top:12px;
+      padding:12px;
+      border-radius:12px;
+      display:none;
+      line-height:1.5;
+    }
+    .answer.ok{
+      background:#ecfdf5;
+      color:var(--ok);
+      border:1px solid #bbf7d0;
+      display:block;
+    }
+    .answer.bad{
+      background:#fef2f2;
+      color:var(--bad);
+      border:1px solid #fecaca;
+      display:block;
+    }
+    .pill{
+      display:inline-block;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:var(--accent);
+      font-weight:700;
+      margin-right:6px;
+      margin-bottom:6px;
+    }
+    .history-list{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+    }
+    .history-item{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 12px;
+      background:#fafafa;
+      font-size:14px;
+    }
+    .footer-note{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+    .top-buttons{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width: 640px){
+      .top-buttons{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>SAT Daily Trainer</h1>
+      <p>GitHub-ready daily practice app for a 6th grade student building toward SAT success. Open the page each day, generate a fresh set, answer, and track progress.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Today's Practice</h2>
+        <div class="controls">
+          <div>
+            <label for="mode">Training Mode</label>
+            <select id="mode">
+              <option value="bridge">6th Grade Bridge Mode</option>
+              <option value="sat">SAT Mode</option>
+            </select>
+          </div>
+          <div>
+            <label for="count">Questions Per Day</label>
+            <select id="count">
+              <option value="6">6 questions</option>
+              <option value="8" selected>8 questions</option>
+              <option value="10">10 questions</option>
+              <option value="12">12 questions</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <span class="pill">Reading</span>
+          <span class="pill">Writing</span>
+          <span class="pill">Math</span>
+        </div>
+
+        <div class="top-buttons">
+          <button onclick="generateQuiz()">Generate Today's Set</button>
+          <button class="secondary" onclick="submitQuiz()">Submit Answers</button>
+          <button class="ghost" onclick="resetToday()">Reset Today</button>
+        </div>
+
+        <div id="quizArea" class="quiz-area"></div>
+      </div>
+
+      <div class="card">
+        <h2>Progress Tracker</h2>
+        <div class="stats">
+          <div class="stat">
+            <div class="num" id="streakNum">0</div>
+            <div class="muted">Day Streak</div>
+          </div>
+          <div class="stat">
+            <div class="num" id="avgNum">0%</div>
+            <div class="muted">Average Score</div>
+          </div>
+          <div class="stat">
+            <div class="num" id="daysNum">0</div>
+            <div class="muted">Days Completed</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <label for="studentName">Student Name</label>
+          <input id="studentName" type="text" placeholder="Enter name (optional)" />
+        </div>
+
+        <div style="margin-top:12px;">
+          <button onclick="saveName()" class="ghost">Save Name</button>
+        </div>
+
+        <div style="margin-top:18px;">
+          <h2 style="font-size:18px;">Recent History</h2>
+          <div id="historyList" class="history-list"></div>
+        </div>
+
+        <div class="footer-note">
+          <strong>GitHub tip:</strong> upload this file as <code>index.html</code> to a GitHub repository, then enable GitHub Pages. The site will work as a simple webpage without any extra setup.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const questionBank = {
+  bridge: {
+    reading: [
+      {
+        type:"Reading",
+        subtype:"Main Idea",
+        question:"Passage: Mia planted beans in three cups. One cup got lots of sunlight, one got a little, and one stayed in a dark closet. After a week, the plant in the sunlight was tallest. What is the main idea?",
+        choices:[
+          "Beans can only grow in closets.",
+          "Sunlight helps plants grow better.",
+          "Mia likes cups more than gardens.",
+          "All plants grow the same way."
+        ],
+        answer:1,
+        explanation:"The passage compares different light conditions and shows the tallest plant grew in sunlight."
+      },
+      {
+        type:"Reading",
+        subtype:"Vocabulary in Context",
+        question:"Passage: The puppy was timid when it entered the noisy room, so it stayed close to its owner. In this sentence, timid most nearly means:",
+        choices:["brave","shy","hungry","playful"],
+        answer:1,
+        explanation:"Because the puppy stayed close and felt unsure in a noisy room, timid means shy."
+      },
+      {
+        type:"Reading",
+        subtype:"Inference",
+        question:"Passage: Leo finished his homework before dinner and packed his backpack right away. Then he put his soccer cleats by the door. What can you infer?",
+        choices:[
+          "Leo forgot about school.",
+          "Leo probably has soccer after school tomorrow.",
+          "Leo is cleaning the whole house.",
+          "Leo does not like sports."
+        ],
+        answer:1,
+        explanation:"Putting cleats by the door suggests he expects to need them soon."
+      },
+      {
+        type:"Reading",
+        subtype:"Author's Purpose",
+        question:"Passage: A poster explains how recycling paper saves trees and reduces waste. The author's purpose is to:",
+        choices:[
+          "entertain readers with a story",
+          "persuade or inform people about recycling",
+          "describe a football game",
+          "teach people how to bake bread"
+        ],
+        answer:1,
+        explanation:"The poster shares benefits of recycling to inform and encourage action."
+      }
+    ],
+    writing: [
+      {
+        type:"Writing",
+        subtype:"Grammar",
+        question:"Choose the correct sentence.",
+        choices:[
+          "She go to school every day.",
+          "She goes to school every day.",
+          "She going to school every day.",
+          "She gone to school every day."
+        ],
+        answer:1,
+        explanation:"For third-person singular in the present tense, use goes."
+      },
+      {
+        type:"Writing",
+        subtype:"Punctuation",
+        question:"Which sentence uses punctuation correctly?",
+        choices:[
+          "After lunch we went outside.",
+          "After lunch, we went outside.",
+          "After, lunch we went outside.",
+          "After lunch we, went outside."
+        ],
+        answer:1,
+        explanation:"An introductory phrase should be followed by a comma."
+      },
+      {
+        type:"Writing",
+        subtype:"Word Choice",
+        question:"Pick the best word: The test was difficult, but Maya remained ____ and finished every question.",
+        choices:["calm","crumb","storm","stone"],
+        answer:0,
+        explanation:"Calm best fits the meaning of staying steady during a hard test."
+      },
+      {
+        type:"Writing",
+        subtype:"Sentence Order",
+        question:"Which sentence is the clearest?",
+        choices:[
+          "Because the rain stopped, we played outside.",
+          "We played because outside the rain stopped.",
+          "Stopped the rain, outside we played because.",
+          "Outside because rain stopped we played."
+        ],
+        answer:0,
+        explanation:"It is grammatically correct and expresses the idea most clearly."
+      }
+    ],
+    math: [
+      {
+        type:"Math",
+        subtype:"Arithmetic",
+        question:"What is 48 + 27?",
+        choices:["65","75","85","95"],
+        answer:1,
+        explanation:"48 + 27 = 75."
+      },
+      {
+        type:"Math",
+        subtype:"Fractions",
+        question:"Which fraction is equal to 1/2?",
+        choices:["2/3","3/6","4/10","5/12"],
+        answer:1,
+        explanation:"3/6 simplifies to 1/2."
+      },
+      {
+        type:"Math",
+        subtype:"Percent",
+        question:"What is 25% of 80?",
+        choices:["10","15","20","25"],
+        answer:2,
+        explanation:"25% means one-fourth, and one-fourth of 80 is 20."
+      },
+      {
+        type:"Math",
+        subtype:"Algebra",
+        question:"If 3x = 21, what is x?",
+        choices:["6","7","8","9"],
+        answer:1,
+        explanation:"Divide both sides by 3 to get x = 7."
+      },
+      {
+        type:"Math",
+        subtype:"Geometry",
+        question:"A rectangle has length 8 and width 3. What is its area?",
+        choices:["11","16","24","48"],
+        answer:2,
+        explanation:"Area = length × width = 8 × 3 = 24."
+      }
+    ]
+  },
+  sat: {
+    reading: [
+      {
+        type:"Reading",
+        subtype:"Information and Ideas",
+        question:"Passage: Researchers tested whether short study breaks improve memory. Students who paused briefly between review sessions remembered more information one week later than students who studied continuously. Which choice best states the central claim?",
+        choices:[
+          "Longer study sessions always cause confusion.",
+          "Brief breaks may improve long-term retention.",
+          "Students dislike reviewing material repeatedly.",
+          "Memory can only be measured after one week."
+        ],
+        answer:1,
+        explanation:"The result described is that students with short pauses remembered more later."
+      },
+      {
+        type:"Reading",
+        subtype:"Craft and Structure",
+        question:"In the sentence 'The committee's response was measured rather than impulsive,' measured most nearly means:",
+        choices:["calculated and careful","tiny","hidden","mathematical"],
+        answer:0,
+        explanation:"Measured here describes a careful, controlled response."
+      },
+      {
+        type:"Reading",
+        subtype:"Inference",
+        question:"Passage: Although the original design was inexpensive to build, the city eventually replaced it with a more durable model after years of costly repairs. Which inference is best supported?",
+        choices:[
+          "The city prefers attractive designs to practical ones.",
+          "The cheaper design turned out to be less economical over time.",
+          "Repairs were completed faster than expected.",
+          "The replacement model was built by the same company."
+        ],
+        answer:1,
+        explanation:"The passage contrasts low initial cost with expensive repairs later."
+      }
+    ],
+    writing: [
+      {
+        type:"Writing",
+        subtype:"Standard English Conventions",
+        question:"Choose the option that completes the sentence correctly: The scientists, along with the lab assistant, ____ preparing the samples.",
+        choices:["is","are","be","were"],
+        answer:1,
+        explanation:"The subject is scientists. The phrase 'along with the lab assistant' does not change the plural subject, so are is correct."
+      },
+      {
+        type:"Writing",
+        subtype:"Expression of Ideas",
+        question:"Which transition best completes the sentence? The first prototype was lightweight and efficient; ____, it was too fragile for everyday use.",
+        choices:["for example","however","therefore","similarly"],
+        answer:1,
+        explanation:"The second clause contrasts with the first, so however is correct."
+      },
+      {
+        type:"Writing",
+        subtype:"Concision",
+        question:"Which version is most concise?",
+        choices:[
+          "The reason is because the road was icy.",
+          "The reason why is because the road was icy.",
+          "The road was icy.",
+          "It was due to the fact that the road was icy."
+        ],
+        answer:2,
+        explanation:"The road was icy expresses the idea directly with no redundancy."
+      },
+      {
+        type:"Writing",
+        subtype:"Punctuation",
+        question:"Choose the sentence with correct punctuation.",
+        choices:[
+          "My brother loves chess; he practices every evening.",
+          "My brother loves chess, he practices every evening.",
+          "My brother loves chess he practices every evening.",
+          "My brother loves chess: and he practices every evening."
+        ],
+        answer:0,
+        explanation:"A semicolon correctly joins two closely related independent clauses."
+      }
+    ],
+    math: [
+      {
+        type:"Math",
+        subtype:"Algebra",
+        question:"If 2x + 5 = 17, what is the value of x?",
+        choices:["5","6","7","8"],
+        answer:1,
+        explanation:"2x = 12, so x = 6."
+      },
+      {
+        type:"Math",
+        subtype:"Advanced Math",
+        question:"Which expression is equivalent to (x + 3)(x - 3)?",
+        choices:["x² + 9","x² - 6x + 9","x² - 9","x² + 6x - 9"],
+        answer:2,
+        explanation:"This is a difference of squares: x² - 9."
+      },
+      {
+        type:"Math",
+        subtype:"Data Analysis",
+        question:"A store discounts a $60 backpack by 15%. What is the sale price?",
+        choices:["$45","$49","$51","$54"],
+        answer:2,
+        explanation:"15% of 60 is 9, and 60 - 9 = 51."
+      },
+      {
+        type:"Math",
+        subtype:"Geometry",
+        question:"A circle has radius 4. What is its area?",
+        choices:["8π","16π","32π","64π"],
+        answer:1,
+        explanation:"Area of a circle is πr² = π(4²) = 16π."
+      }
+    ]
+  }
+};
+
+let currentQuiz = [];
+
+function seededRandom(seed){
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+function getDaySeed(){
+  const d = new Date();
+  return Number(`${d.getFullYear()}${d.getMonth()+1}${d.getDate()}`);
+}
+
+function pickQuestions(mode, count){
+  const seed = getDaySeed();
+  const pools = [
+    ...questionBank[mode].reading.map(q => ({...q, bucket:"reading"})),
+    ...questionBank[mode].writing.map(q => ({...q, bucket:"writing"})),
+    ...questionBank[mode].math.map(q => ({...q, bucket:"math"}))
+  ];
+
+  const selected = [];
+  const used = new Set();
+
+  while(selected.length < count && used.size < pools.length){
+    const idx = Math.floor(seededRandom(seed + selected.length * 17 + used.size * 31) * pools.length);
+    if(!used.has(idx)){
+      selected.push({...pools[idx], id:`q${selected.length}`});
+      used.add(idx);
+    }
+  }
+  return selected;
+}
+
+function generateQuiz(){
+  const mode = document.getElementById("mode").value;
+  const count = Number(document.getElementById("count").value);
+  currentQuiz = pickQuestions(mode, count);
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const area = document.getElementById("quizArea");
+  if(currentQuiz.length === 0){
+    area.innerHTML = "<p class='muted'>Click <strong>Generate Today's Set</strong> to begin.</p>";
+    return;
+  }
+
+  let html = "";
+  currentQuiz.forEach((q, i) => {
+    html += `
+      <div class="question">
+        <div class="q-meta">${q.type} · ${q.subtype}</div>
+        <div class="q-text">${i+1}. ${q.question}</div>
+        <div class="choices">
+          ${q.choices.map((choice, cIndex) => `
+            <label class="choice">
+              <input type="radio" name="question_${i}" value="${cIndex}">
+              <span><strong>${String.fromCharCode(65 + cIndex)}.</strong> ${choice}</span>
+            </label>
+          `).join("")}
+        </div>
+        <div id="answer_${i}" class="answer"></div>
+      </div>
+    `;
+  });
+  area.innerHTML = html;
+}
+
+function submitQuiz(){
+  if(currentQuiz.length === 0){
+    alert("Please generate today's set first.");
+    return;
+  }
+
+  let correct = 0;
+
+  currentQuiz.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="question_${i}"]:checked`);
+    const answerBox = document.getElementById(`answer_${i}`);
+    if(selected && Number(selected.value) === q.answer){
+      correct++;
+      answerBox.className = "answer ok";
+      answerBox.innerHTML = `✅ Correct.<br><strong>Explanation:</strong> ${q.explanation}`;
+    } else {
+      answerBox.className = "answer bad";
+      answerBox.innerHTML = `❌ Correct answer: <strong>${String.fromCharCode(65 + q.answer)}. ${q.choices[q.answer]}</strong><br><strong>Explanation:</strong> ${q.explanation}`;
+    }
+  });
+
+  const score = Math.round((correct / currentQuiz.length) * 100);
+  saveResult(score);
+  updateDashboard();
+  window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
+}
+
+function resetToday(){
+  currentQuiz = [];
+  renderQuiz();
+}
+
+function getResults(){
+  return JSON.parse(localStorage.getItem("satTrainerResults") || "[]");
+}
+
+function saveResult(score){
+  const results = getResults();
+  const today = new Date().toISOString().slice(0,10);
+  const mode = document.getElementById("mode").value;
+  const existingIndex = results.findIndex(r => r.date === today);
+
+  const entry = {date:today, score, mode};
+
+  if(existingIndex >= 0){
+    results[existingIndex] = entry;
+  } else {
+    results.unshift(entry);
+  }
+  localStorage.setItem("satTrainerResults", JSON.stringify(results.slice(0, 60)));
+}
+
+function computeStreak(results){
+  if(results.length === 0) return 0;
+  const dates = results.map(r => r.date).sort().reverse();
+  let streak = 0;
+  let current = new Date();
+  current.setHours(0,0,0,0);
+
+  for(let i=0; i<365; i++){
+    const iso = current.toISOString().slice(0,10);
+    if(dates.includes(iso)){
+      streak++;
+      current.setDate(current.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
+function updateDashboard(){
+  const results = getResults();
+  const days = results.length;
+  const avg = days ? Math.round(results.reduce((a,b) => a + b.score, 0) / days) : 0;
+  const streak = computeStreak(results);
+
+  document.getElementById("daysNum").textContent = days;
+  document.getElementById("avgNum").textContent = avg + "%";
+  document.getElementById("streakNum").textContent = streak;
+
+  const history = document.getElementById("historyList");
+  if(days === 0){
+    history.innerHTML = "<div class='history-item muted'>No practice history yet.</div>";
+  } else {
+    history.innerHTML = results.slice(0,7).map(r => `
+      <div class="history-item">
+        <strong>${r.date}</strong> · ${r.mode === "bridge" ? "Bridge Mode" : "SAT Mode"} · <strong>${r.score}%</strong>
+      </div>
+    `).join("");
+  }
+
+  const savedName = localStorage.getItem("satTrainerName") || "";
+  document.getElementById("studentName").value = savedName;
+}
+
+function saveName(){
+  const name = document.getElementById("studentName").value.trim();
+  localStorage.setItem("satTrainerName", name);
+  alert(name ? `Saved name: ${name}` : "Name cleared.");
+}
+
+updateDashboard();
+renderQuiz();
+</script>
+</body>
+</html>
